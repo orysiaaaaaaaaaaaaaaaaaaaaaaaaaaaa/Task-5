@@ -1,0 +1,43 @@
+using System;
+using System.IO;
+
+class CaptainsJournal
+{
+    static void Main()
+    {
+        string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+        string fileName = $"{currentDate}.txt";
+        bool isWriting = false;
+
+        Console.WriteLine("Enter your journal entries. Type 'start' to begin and 'stop' to end.");
+
+        using (StreamWriter writer = new StreamWriter(fileName))
+        {
+            writer.WriteLine("Captain’s log");
+            writer.WriteLine($"Stardate {currentDate}");
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (input.Equals("start", StringComparison.OrdinalIgnoreCase))
+                {
+                    isWriting = true;
+                    continue;
+                }
+                if (input.Equals("stop", StringComparison.OrdinalIgnoreCase))
+                {
+                    break;
+                }
+                if (isWriting)
+                {
+                    writer.WriteLine(input);
+                }
+            }
+
+            writer.WriteLine("Jean-Luc Picard");
+        }
+
+        Console.WriteLine($"Journal saved to {fileName}");
+    }
+}
